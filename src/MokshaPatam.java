@@ -38,20 +38,26 @@ public class MokshaPatam {
         int current = START;
         queue.add(current);
         visited[START] = true;
-        //
+        // Create and initialize array to keep track of count
         int[] count = new int[boardsize + 1];
+        // Go until no solution
         while (!queue.isEmpty()) {
             current = queue.remove();
+            // If at the end return the amount of moves
             if (current == boardsize) {
                 return count[current];
             }
             else {
+                // Go through 1-6 dice rolls
                 for (int i = 1; i <= MAX_MOVE; i++) {
                     int next = current + i;
+                    // If you roll past the end it doesn't count
                     if (next > boardsize) {
                         continue;
                     }
+                    // Change it to the actual value on the map for snakes and ladders
                     next = map[next];
+                    // If we haven't visited it then we add it to the queue and update the count in that spot
                     if (!visited[next]) {
                         queue.add(next);
                         visited[next] = true;
@@ -60,6 +66,7 @@ public class MokshaPatam {
                 }
             }
         }
+        // Return -1 if impossible
         return -1;
     }
 
