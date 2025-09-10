@@ -16,28 +16,34 @@ public class MokshaPatam {
     final static int MAX_MOVE = 6;
     final static int START = 1;
 
-    private static int[] board;
+    private static int[] map;
     /**
      * TODO: Complete this function, fewestMoves(), to return the minimum number of moves
      *  to reach the final square on a board with the given size, ladders, and snakes.
      */
     public static int fewestMoves(int boardsize, int[][] ladders, int[][] snakes) {
-        board = new int[boardsize + 1];
-        for (int i = 1; i < board.length; i++) {
-                board[i] = i;
+        // Create a "map" for all the values on the board
+        map = new int[boardsize + 1];
+        for (int i = 1; i < map.length; i++) {
+                map[i] = i;
         }
+        // Add all the snakes and ladders onto the board
         addThings(ladders);
         addThings(snakes);
+        // Create and initialize queue
         Queue<Integer> queue = new LinkedList<Integer>();
+        // Create boolean array to check visited spots
         boolean[] visited = new boolean[boardsize + 1];
+        // Initialize variable to keep track of spot on board
         int current = START;
         queue.add(current);
         visited[START] = true;
-        int count = 0;
+        //
+        int[] count = new int[boardsize + 1];
         while (!queue.isEmpty()) {
             current = queue.remove();
             if (current == boardsize) {
-                return count;
+                return count[current];
             }
             else {
                 for (int i = 1; i <= MAX_MOVE; i++) {
@@ -45,22 +51,27 @@ public class MokshaPatam {
                     if (next > boardsize) {
                         continue;
                     }
-                    next = board[next];
+                    next = map[next];
                     if (!visited[next]) {
-                        queue.add(board[current + i]);
+                        queue.add(next);
                         visited[next] = true;
+                        count[next] = count[current] + 1;
                     }
                 }
             }
-            count++;
         }
         return -1;
     }
+
+    // Adds snakes and ladders
     public static void addThings(int[][] array) {
         for (int i = 0; i < array.length; i++) {
+            // Get the starting value of the snake or ladder
             int start = array[i][0];
+            // Get the end of the snake or ladder
             int end = array[i][1];
-            board[start] = end;
+            // Replace the start value with the end value on the map
+            map[start] = end;
         }
     }
 }
