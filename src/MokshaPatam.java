@@ -6,7 +6,7 @@ import java.util.Queue;
  * A puzzle created by Zach Blick
  * for Adventures in Algorithms
  * at Menlo School in Atherton, CA
- *
+ * <p>
  * Completed by: Lucas Huang
  *
  */
@@ -17,6 +17,7 @@ public class MokshaPatam {
     final static int START = 1;
 
     private static int[] map;
+
     /**
      * TODO: Complete this function, fewestMoves(), to return the minimum number of moves
      *  to reach the final square on a board with the given size, ladders, and snakes.
@@ -25,7 +26,7 @@ public class MokshaPatam {
         // Create a "map" for all the values on the board
         map = new int[boardsize + 1];
         for (int i = 1; i < map.length; i++) {
-                map[i] = i;
+            map[i] = i;
         }
         // Add all the snakes and ladders onto the board
         addThings(ladders);
@@ -46,8 +47,7 @@ public class MokshaPatam {
             // If at the end return the amount of moves
             if (current == boardsize) {
                 return count[current];
-            }
-            else {
+            } else {
                 // Go through 1-6 dice rolls
                 for (int i = 1; i <= MAX_MOVE; i++) {
                     int next = current + i;
